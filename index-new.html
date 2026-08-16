@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#063d32" />
+<title>RS Global Ventures | Global Export & Sourcing Partner</title>
+<meta name="description" content="RS Global Ventures is a global export and sourcing partner with 5+ years of experience, connecting quality products with international markets." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="topbar"><div class="container"><div class="topbar-left"><span>International Export & Sourcing</span><strong>5+ Years of Experience</strong></div><div class="topbar-right"><span>FSSAI Details</span><span>GST Details</span></div></div></div>
+<header class="site-header" id="header">
+  <div class="container nav">
+    <a href="#home" class="brand" aria-label="RS Global Ventures home">
+      <img src="logo.png" alt="RS" />
+      <div class="brand-text">
+        <strong>RS Global</strong>
+        <span>Ventures</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#products">Products</a>
+      <a href="#why">Why Us</a>
+      <a href="#process">Process</a>
+      <a href="#reach">Global Reach</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero" id="home" style="background-image:url('port-hero.svg')">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Global Export & Sourcing</span>
+        <h1><span>RS Global</span> Ventures</h1>
+        <p>Your trusted partner for premium agricultural and processed product exports. With 5+ years of experience, we connect Indian quality with international demand.</p>
+        <div class="hero-actions">
+          <button class="btn btn--gold" id="openCatalogBtn">Browse Full Catalog</button>
+          <button class="btn btn--ghost" id="heroWhatsAppBtn">Schedule a Call</button>
+        </div>
+        <div class="hero-points">
+          <span><i></i> Direct from producers</span>
+          <span><i></i> Quality verified</span>
+          <span><i></i> Competitive rates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-art">
+          <div class="world-lines"></div>
+          <div class="about-panel">
+            <strong>5+ Years</strong>
+            <p>Exporting quality products to 12+ countries</p>
+          </div>
+        </div>
+        <div class="about-copy reveal">
+          <span class="eyebrow">Our Story</span>
+          <h2 class="section-title">Why RS Global Ventures</h2>
+          <p>We specialize in connecting premium Indian agricultural products with discerning international buyers. Our network spans from farm to port, ensuring every shipment maintains our quality standards.</p>
+          <div class="about-list">
+            <div>
+              <strong>Diverse Product Range</strong>
+              <span>From spices to dehydrated vegetables and fruits</span>
+            </div>
+            <div>
+              <strong>Quality Assurance</strong>
+              <span>Every batch tested and certified</span>
+            </div>
+            <div>
+              <strong>Efficient Logistics</strong>
+              <span>24/7 tracking and updates on shipments</span>
+            </div>
+            <div>
+              <strong>Dedicated Support</strong>
+              <span>Your partner through every step</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="products">
+    <div class="container">
+      <div class="product-head">
+        <div class="reveal">
+          <span class="eyebrow">Browse Our Collections</span>
+          <h2 class="section-title">Premium Products</h2>
+          <p class="section-copy">Carefully curated selection of export-grade products sourced directly from suppliers.</p>
+        </div>
+      </div>
+      <div class="product-grid" id="categoryCards"></div>
+      <div class="catalog-shell" id="catalogShell">
+        <div class="catalog-panel">
+          <div class="catalog-sidebar">
+            <h4>Categories</h4>
+            <div class="catalog-side-list" id="catalogCategoryList"></div>
+          </div>
+          <div class="catalog-main">
+            <div class="catalog-main-head">
+              <div>
+                <h3 id="catalogTitle">Loading...</h3>
+                <p class="catalog-copy" id="catalogDescription"></p>
+                <div class="breadcrumbs" id="catalogBreadcrumbs"></div>
+              </div>
+              <button class="btn btn--dark" id="closeCatalogBtn">Close ✕</button>
+            </div>
+            <div class="subcategory-row" id="subcategoryRow"></div>
+            <div class="item-grid" id="productItems"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="why">
+    <div class="container">
+      <div class="why-grid">
+        <div class="reveal">
+          <span class="eyebrow">Our Advantage</span>
+          <h2 class="section-title">Why Choose Us</h2>
+          <p class="section-copy">We're committed to being your most reliable export partner.</p>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">✓</div>
+              <h3>Certified Quality</h3>
+              <p>All products meet FSSAI and international standards</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">✓</div>
+              <h3>Competitive Pricing</h3>
+              <p>Direct sourcing ensures best rates for bulk orders</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">✓</div>
+              <h3>Reliable Supply</h3>
+              <p>Consistent availability of quality stock year-round</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">✓</div>
+              <h3>Fast Logistics</h3>
+              <p>Streamlined warehousing and quick shipment dispatch</p>
+            </div>
+          </div>
+        </div>
+        <div class="why-visual">
+          <div class="big">Growth</div>
+          <p>Building sustainable partnerships that grow with your business</p>
+          <div class="mini-metrics">
+            <div>
+              <strong>150+</strong>
+              <span>Happy Clients</span>
+            </div>
+            <div>
+              <strong>500+</strong>
+              <span>Shipments</span>
+            </div>
+            <div>
+              <strong>12+</strong>
+              <span>Countries</span>
+            </div>
+            <div>
+              <strong>50+</strong>
+              <span>Products</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process section section--soft" id="process">
+    <div class="container">
+      <div class="reveal" style="margin-bottom:30px">
+        <span class="eyebrow">Our Method</span>
+        <h2 class="section-title">Export Process</h2>
+      </div>
+      <div class="process-track">
+        <div class="step">
+          <div class="num">1</div>
+          <h3>Inquiry</h3>
+          <p>Share your requirements and bulk quantities</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3>Sample & Quote</h3>
+          <p>Receive samples, pricing, and terms</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3>Order Confirmation</h3>
+          <p>Finalize specs, payment, and timeline</p>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <h3>Quality Check</h3>
+          <p>Thorough inspection and certifications</p>
+        </div>
+        <div class="step">
+          <div class="num">5</div>
+          <h3>Shipment</h3>
+          <p>Safe delivery with full tracking</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reach">
+    <div class="container">
+      <div class="reach-grid">
+        <div class="map-card">
+          <div class="continent c-a"></div>
+          <div class="continent c-b"></div>
+          <div class="continent c-c"></div>
+          <div class="continent c-d"></div>
+          <div class="port p1"></div>
+          <div class="port p2"></div>
+          <div class="port p3"></div>
+          <div class="port p4"></div>
+        </div>
+        <div class="reach-copy reveal">
+          <span class="eyebrow">Across the World</span>
+          <h2 class="section-title">Global Presence</h2>
+          <p class="section-copy">We have established export channels to major markets. Our network ensures fast, reliable delivery to your location.</p>
+          <div class="reach-points">
+            <div>
+              <strong>Europe & UK</strong>
+              <span>Premium restaurants and specialty distributors</span>
+            </div>
+            <div>
+              <strong>Middle East & UAE</strong>
+              <span>Food importers and hospitality chains</span>
+            </div>
+            <div>
+              <strong>APAC & Southeast Asia</strong>
+              <span>Regional food processors and traders</span>
+            </div>
+            <div>
+              <strong>Americas</strong>
+              <span>Specialty food shops and corporate buyers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <div class="cta-grid">
+        <div class="reveal">
+          <h2>Ready to Grow Your Food Export Business?</h2>
+          <p>Join our network of satisfied international buyers. Start with a sample order today.</p>
+        </div>
+        <button class="btn btn--gold" id="ctaWhatsAppBtn" style="margin-top:auto">Get in Touch</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-card reveal">
+          <div>
+            <span class="eyebrow" style="margin-bottom:16px;display:inline-flex">Quick Info</span>
+            <h3 style="font-size:1.35rem;margin-bottom:8px">Get in Touch</h3>
+            <p style="color:var(--muted);font-size:.9rem">Have questions? We're here to help and ready to discuss your export needs.</p>
+          </div>
+          <div class="contact-info">
+            <div>
+              <strong>WhatsApp & Phone</strong>
+              <span>Available 24/7 for inquiries</span>
+            </div>
+            <div>
+              <strong>Email</strong>
+              <span>inquiry@rsglobalventures.com</span>
+            </div>
+            <div>
+              <strong>Response Time</strong>
+              <span>Within 2 hours during business hours</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-card reveal" id="quoteForm">
+          <h3 style="margin-bottom:20px">Export Inquiry Form</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label>Your Full Name</label>
+              <input type="text" placeholder="Name" required />
+            </div>
+            <div class="field">
+              <label>Company Name</label>
+              <input type="text" placeholder="Company" required />
+            </div>
+            <div class="field full">
+              <label>Email Address</label>
+              <input type="email" placeholder="email@company.com" required />
+            </div>
+            <div class="field">
+              <label>Country of Interest</label>
+              <input type="text" placeholder="Your location" required />
+            </div>
+            <div class="field">
+              <label>Category of Interest</label>
+              <select required>
+                <option value="">Select a category...</option>
+                <option>Spices</option>
+                <option>Cereals</option>
+                <option>Pulses</option>
+                <option>Vegetables</option>
+                <option>Fruits</option>
+                <option>Dehydrated Powders</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Your Message & Requirements</label>
+              <textarea placeholder="Tell us about your requirements, expected volume, specifications..." required></textarea>
+            </div>
+          </div>
+          <p class="form-note">By submitting, you agree to our privacy policy and terms of service.</p>
+          <button type="submit" class="btn btn--gold" style="margin-top:14px">Send Inquiry</button>
+          <p class="form-status" id="formStatus">✓ Your inquiry has been received. We'll respond within 2 hours.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <strong style="font-size:1.1rem">RS Global Ventures</strong>
+        <p>We connect premium Indian export products with international markets through reliable sourcing, quality assurance, and timely logistics.</p>
+        <div class="credential-badges">
+          <span>FSSAI Certified</span>
+          <span>GST Compliant</span>
+          <span>ISO Aligned</span>
+        </div>
+      </div>
+      <nav class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <nav class="footer-col">
+        <h4>Resources</h4>
+        <a href="#process">Export Process</a>
+        <a href="#reach">Global Reach</a>
+        <a href="#contact">Inquiry Form</a>
+        <a href="/admin">Admin Portal</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2024</span> RS Global Ventures. All rights reserved.</span>
+      <span>Crafted with care for global commerce.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Product Detail Modal -->
+<div class="modal" id="productModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="detailTitle"></h3>
+      <button class="close-btn" data-close="productModal" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-grid">
+        <div id="detailImage" class="detail-image"></div>
+        <div class="detail-copy">
+          <p class="detail-kicker" id="detailKicker"></p>
+          <h4 id="detailName"></h4>
+          <p id="detailDescription"></p>
+          <div class="variant-list" id="detailVariants"></div>
+          <div class="product-toolbar">
+            <button class="btn btn--gold" id="ctaInquiryBtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Make Inquiry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WhatsApp Float Button -->
+<button class="whatsapp-float" id="whatsappFloat">
+  <span class="whatsapp-label">Chat with us</span>
+  💬
+</button>
+
+<!-- External Scripts -->
+<script src="js/modals.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
