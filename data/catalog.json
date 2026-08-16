@@ -1,173 +1,47 @@
 [
   {
-    "id": "cat-spices",
-    "type": "category",
-    "parentId": null,
-    "name": "Spices",
-    "tag": "Premium exports",
-    "description": "Premium spice products sourced for dependable international trade and repeat export orders.",
+    "id": "cat-veg",
+    "type": "subcategory",
+    "parentId": "item-1786884536119",
+    "name": "Rice",
+    "tag": "Premium quality",
+    "description": "super quality",
     "image": "/default-product.svg"
   },
   {
-    "id": "cat-cereals",
-    "type": "category",
-    "parentId": null,
-    "name": "Cereals",
-    "tag": "Staple grains",
-    "description": "Quality cereal and grain products suitable for bulk export requirements.",
-    "image": "/uploads/1786868292127-837748d08f-test.jpg"
-  },
-  {
-    "id": "cat-pulses",
-    "type": "category",
-    "name": "Pulses",
-    "tag": "Protein-rich staples",
-    "description": "Selected pulses packed for reliable international supply.",
-    "image": "/default-product.svg",
-    "parentId": null
-  },
-  {
-    "id": "cat-veg",
-    "type": "category",
-    "name": "Vegetables",
-    "tag": "Fresh produce",
-    "description": "Fresh and export-ready vegetables with careful sourcing.",
-    "image": "/default-product.svg",
-    "parentId": null
-  },
-  {
     "id": "cat-fruits",
-    "type": "category",
-    "name": "Fruits",
-    "tag": "Fresh & seasonal",
+    "type": "product",
+    "parentId": "cat-veg",
+    "name": "Basmati Rice",
+    "tag": "Basmati top quality",
     "description": "Fresh fruits sourced for quality and shelf-life.",
-    "image": "/default-product.svg",
-    "parentId": null
+    "image": "/default-product.svg"
   },
   {
     "id": "cat-dehydrated",
+    "type": "variant",
+    "parentId": "cat-fruits",
+    "name": "White Basmati",
+    "tag": "White Basmati super quality",
+    "description": "test descriotiton",
+    "image": "/uploads/1786884724231-dcf2bc7287-test.jpg"
+  },
+  {
+    "id": "item-1786884297727",
     "type": "category",
-    "name": "Dehydrated Powders",
-    "tag": "Value-added ingredients",
-    "description": "Dehydrated ingredients and powders for food and industrial applications.",
-    "image": "/default-product.svg",
-    "parentId": null
+    "parentId": null,
+    "name": "Pulses",
+    "tag": "",
+    "description": "test",
+    "image": "/uploads/1786884296124-c864a5953c-test.jpg"
   },
   {
-    "id": "sub-whole",
-    "type": "subcategory",
-    "name": "Whole Spices",
-    "tag": "Whole / natural",
-    "description": "Whole and cleaned spices for food manufacturers, distributors and retailers.",
-    "image": "/default-product.svg",
-    "parentId": "cat-spices"
-  },
-  {
-    "id": "sub-powder",
-    "type": "subcategory",
-    "name": "Spice Powders",
-    "tag": "Ground & blended",
-    "description": "Fine spice powders with consistent processing and packaging options.",
-    "image": "/default-product.svg",
-    "parentId": "cat-spices"
-  },
-  {
-    "id": "sub-dry",
-    "type": "subcategory",
-    "name": "Dried Chillies",
-    "tag": "Dried products",
-    "description": "Dry chilli products available in multiple grades and cuts.",
-    "image": "/default-product.svg",
-    "parentId": "cat-spices"
-  },
-  {
-    "id": "prod-cumin",
-    "type": "product",
-    "name": "Cumin Seeds",
-    "tag": "Whole spice",
-    "description": "Export-quality cumin seeds available in different grades, sizes and cleaning specifications.",
-    "image": "/default-product.svg",
-    "parentId": "sub-whole"
-  },
-  {
-    "id": "prod-red-powder",
-    "type": "product",
-    "name": "Red Chilli Powder",
-    "tag": "Ground spice",
-    "description": "Aromatic red chilli powder with configurable heat, color and mesh specifications.",
-    "image": "/default-product.svg",
-    "parentId": "sub-powder"
-  },
-  {
-    "id": "prod-dry-chilli",
-    "type": "product",
-    "name": "Dry Red Chilli",
-    "tag": "Dried whole chilli",
-    "description": "Whole dried red chillies available by variety, size, color and heat level.",
-    "image": "/default-product.svg",
-    "parentId": "sub-dry"
-  },
-  {
-    "id": "var-cumin-1",
-    "type": "variant",
-    "name": "Cumin Seeds – Machine Clean",
-    "tag": "Premium grade",
-    "description": "Machine-cleaned cumin seeds for consistent appearance and export specifications.",
-    "image": "/default-product.svg",
-    "parentId": "prod-cumin"
-  },
-  {
-    "id": "var-cumin-2",
-    "type": "variant",
-    "name": "Cumin Seeds – Sortex Clean",
-    "tag": "Extra cleaned",
-    "description": "Sortex-cleaned cumin seeds selected for high visual purity.",
-    "image": "/default-product.svg",
-    "parentId": "prod-cumin"
-  },
-  {
-    "id": "var-cumin-3",
-    "type": "variant",
-    "name": "Cumin Seeds – Bold Grade",
-    "tag": "Bold size",
-    "description": "Larger cumin seed grade for buyers seeking a fuller seed profile.",
-    "image": "/default-product.svg",
-    "parentId": "prod-cumin"
-  },
-  {
-    "id": "var-powder-1",
-    "type": "variant",
-    "name": "Red Chilli Powder – Standard",
-    "tag": "Food grade",
-    "description": "Balanced color and heat profile for regular food processing applications.",
-    "image": "/default-product.svg",
-    "parentId": "prod-red-powder"
-  },
-  {
-    "id": "var-powder-2",
-    "type": "variant",
-    "name": "Red Chilli Powder – High Color",
-    "tag": "High color",
-    "description": "Higher color chilli powder suitable for applications where visual color is important.",
-    "image": "/default-product.svg",
-    "parentId": "prod-red-powder"
-  },
-  {
-    "id": "var-dry-1",
-    "type": "variant",
-    "name": "Dry Red Chilli – Whole",
-    "tag": "Whole pod",
-    "description": "Whole dried red chilli pods in selected sizes and varieties.",
-    "image": "/default-product.svg",
-    "parentId": "prod-dry-chilli"
-  },
-  {
-    "id": "var-dry-2",
-    "type": "variant",
-    "name": "Dry Red Chilli – Stemless",
-    "tag": "Stemless",
-    "description": "Stemless dry red chilli prepared for easier downstream processing.",
-    "image": "/default-product.svg",
-    "parentId": "prod-dry-chilli"
+    "id": "item-1786884536119",
+    "type": "category",
+    "parentId": null,
+    "name": "Grains",
+    "tag": "Premium quality",
+    "description": "PRemimum quality",
+    "image": "/default-product.svg"
   }
 ]

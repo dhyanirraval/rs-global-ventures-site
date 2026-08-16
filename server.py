@@ -39,8 +39,22 @@ def load_env_file():
 
 load_env_file()
 
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+def load_example_env():
+    ex_file = ROOT / '.env.example'
+    vals = {}
+    if not ex_file.exists():
+        return vals
+    for line in ex_file.read_text(encoding='utf-8').splitlines():
+        line = line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        k, v = line.split('=', 1)
+        vals[k.strip()] = v.strip()
+    return vals
+
+_EXAMPLE = load_example_env()
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or _EXAMPLE.get('ADMIN_EMAIL')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or _EXAMPLE.get('ADMIN_PASSWORD')
 SESSION_SECRET = os.environ.get('SESSION_SECRET', 'replace-with-a-long-random-secret')
 PORT = int(os.environ.get('PORT', '3000'))
 SESSION_TTL = 8 * 60 * 60
