@@ -76,24 +76,28 @@ function initSite() {
       if (submitButton) submitButton.disabled = true;
 
       try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
-
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(result.error || 'Submission failed.');
-
+        const subject = encodeURIComponent('New Business Inquiry – RS Global Ventures');
+        const lines = [
+          `Name: ${body.name}`,
+          `Company: ${body.company}`,
+          `Customer Email: ${body.email}`,
+          `Phone / WhatsApp: ${body.phone}`,
+          `Country: ${body.country}`,
+          `Product / Category: ${body.category}`,
+          `Quantity / Requirement: ${body.quantity}`,
+          `Message: ${body.message}`
+        ];
+        const mailto = `mailto:info@rsglobalventures.in?subject=${subject}&body=${encodeURIComponent(lines.join('\n\n'))}`;
+        window.location.href = mailto;
         form.reset();
         if (status) {
-          status.textContent = 'Thank you for contacting RS Global Ventures. Your inquiry has been received. Our team will get back to you shortly.';
+          status.textContent = 'Your email application will open with the inquiry addressed to info@rsglobalventures.in. Please send the email to complete your enquiry.';
           status.style.display = 'block';
           status.style.color = '#0f766e';
         }
       } catch (error) {
         if (status) {
-          status.textContent = error.message || 'There was a problem sending your inquiry. Please try again or contact us by WhatsApp.';
+          status.textContent = 'There was a problem preparing your inquiry. Please email info@rsglobalventures.in directly or contact us by WhatsApp.';
           status.style.display = 'block';
           status.style.color = '#b42318';
         }
