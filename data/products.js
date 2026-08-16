@@ -33,12 +33,13 @@ window.RSGV_PRODUCTS = [
 
   // Pulses
   { id:'cat-pulses', type:'category', parentId:null, name:'Pulses', tag:'Indian pulses & dals', description:'Indian pulses for wholesale, food-service and international sourcing requirements.', image:'/assets/categories/pulses.jpg' },
-  { id:'pul-chickpeas', type:'product', parentId:'cat-pulses', name:'Chickpeas', tag:'Pulses', description:'Indian chickpeas for bulk export and sourcing enquiries, with grade and packing based on requirements.', image:'/assets/products/pul-chickpeas.svg' },
+  { id:'pul-chickpeas', type:'product', parentId:'cat-pulses', name:'Chickpeas', tag:'Pulses', description:'Indian chickpeas for bulk export and sourcing enquiries, with grade and packing based on requirements.', image:'/assets/products/cheakpeas.jpg' },
   { id:'pul-moong', type:'product', parentId:'cat-pulses', name:'Green Moong', tag:'Pulses', description:'Green moong for wholesale and export enquiries, subject to availability and buyer specifications.', image:'/assets/products/pul-moong.jpg' },
-  { id:'pul-toor', type:'product', parentId:'cat-pulses', name:'Toor Dal', tag:'Pulses', description:'Indian Toor Dal for bulk sourcing and export enquiries.', image:'/assets/products/pul-toor.svg' },
+  { id:'pul-toor', type:'product', parentId:'cat-pulses', name:'Toor Dal', tag:'Pulses', description:'Indian Toor Dal for bulk sourcing and export enquiries.', image:'/assets/products/toor-dal.jpg' },
 
   // Fruits
   { id:'cat-fruits', type:'category', parentId:null, name:'Fruits', tag:'Fresh Indian produce', description:'Fresh Indian fruit sourcing for international enquiries, subject to season, destination and availability.', image:'/assets/categories/fruits.jpg' },
+  { id:'fr-plums', type:'product', parentId:'cat-fruits', name:'Fresh Plums', tag:'Fruits', description:'Indian fresh plums sourcing for seasonal export enquiries. Variety, grade and packing are discussed per destination.', image:'/assets/products/plums.webp' },
   { id:'fr-mango', type:'product', parentId:'cat-fruits', name:'Fresh Mango', tag:'Fruits', description:'Indian fresh mango sourcing for seasonal export enquiries. Variety, grade and packing are discussed per destination.', image:'/assets/products/fr-mango.svg' },
   { id:'fr-guava', type:'product', parentId:'cat-fruits', name:'Fresh Guava', tag:'Fruits', description:'Indian fresh guava sourcing for export enquiries, subject to season, grade and buyer requirements.', image:'/assets/products/fr-guava.jpg' },
   { id:'fr-pomegranate', type:'product', parentId:'cat-fruits', name:'Fresh Pomegranate', tag:'Fruits', description:'Indian pomegranate sourcing for export enquiries, subject to season and buyer specifications.', image:'/assets/products/fr-pomegranate.webp' },
