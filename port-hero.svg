@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#082f3b"/><stop offset=".48" stop-color="#165c61"/><stop offset="1" stop-color="#d18a24"/></linearGradient>
+ <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#164e57"/><stop offset="1" stop-color="#061f2a"/></linearGradient>
+ <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3d514f"/><stop offset="1" stop-color="#172b31"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1600" height="760" fill="url(#sky)"/>
+<circle cx="1260" cy="205" r="110" fill="#f6c35c" opacity=".34" filter="url(#blur)"/>
+<path d="M0 315 C260 270 430 330 640 300 C850 270 1110 285 1600 245 L1600 760 L0 760Z" fill="#102e38" opacity=".38"/>
+<rect y="475" width="1600" height="285" fill="url(#water)"/>
+<!-- distant cranes -->
+<g stroke="#d9ad55" stroke-width="7" opacity=".62" fill="none">
+ <path d="M1010 470V170M1010 170L1215 470M1010 210H1210M1180 210V470"/>
+ <path d="M1335 470V235M1335 235L1480 470M1335 265H1470"/>
+</g>
+<!-- container stacks -->
+<g>
+ <rect x="1160" y="370" width="115" height="105" fill="#a74a2b"/><rect x="1275" y="345" width="115" height="130" fill="#174d68"/>
+ <rect x="1390" y="390" width="115" height="85" fill="#c78a22"/><rect x="1505" y="355" width="95" height="120" fill="#a74a2b"/>
+ <path d="M1160 405h115M1275 390h115M1390 420h115M1505 395h95" stroke="#fff" opacity=".18"/>
+</g>
+<!-- cargo ship -->
+<path d="M250 505 L1040 505 L955 585 L385 585 Z" fill="#101d25"/>
+<path d="M320 475 H870 V520 H320Z" fill="#213a42"/>
+<g>
+ <rect x="380" y="430" width="92" height="45" fill="#bd7620"/><rect x="476" y="430" width="92" height="45" fill="#315e70"/><rect x="572" y="430" width="92" height="45" fill="#9f4530"/><rect x="668" y="430" width="92" height="45" fill="#bd7620"/><rect x="764" y="430" width="92" height="45" fill="#315e70"/>
+ <rect x="428" y="382" width="92" height="45" fill="#315e70"/><rect x="524" y="382" width="92" height="45" fill="#bd7620"/><rect x="620" y="382" width="92" height="45" fill="#9f4530"/><rect x="716" y="382" width="92" height="45" fill="#315e70"/>
+</g>
+<rect x="805" y="330" width="82" height="145" fill="#d7dedb"/><rect x="820" y="350" width="52" height="34" fill="#52717a"/>
+<!-- foreground terminal road -->
+<path d="M780 760 L1040 475 L1600 475 L1600 760Z" fill="url(#road)" opacity=".94"/>
+<path d="M1030 760 L1150 475" stroke="#e7bd4d" stroke-width="8" stroke-dasharray="34 28" opacity=".8"/>
+<!-- trucks -->
+<g transform="translate(1080 560)"><rect width="155" height="80" rx="7" fill="#e8ece8"/><rect x="108" y="22" width="65" height="58" rx="6" fill="#d7ddd9"/><rect x="118" y="31" width="38" height="25" rx="3" fill="#5d7880"/><circle cx="32" cy="84" r="15" fill="#111b20"/><circle cx="135" cy="84" r="15" fill="#111b20"/></g>
+<g transform="translate(1280 625) scale(.75)"><rect width="155" height="80" rx="7" fill="#c98c23"/><rect x="108" y="22" width="65" height="58" rx="6" fill="#d7ddd9"/><rect x="118" y="31" width="38" height="25" rx="3" fill="#5d7880"/><circle cx="32" cy="84" r="15" fill="#111b20"/><circle cx="135" cy="84" r="15" fill="#111b20"/></g>
+<!-- crane foreground -->
+<g stroke="#182d34" stroke-width="10" fill="none"><path d="M116 475V120M116 120H515M515 120V475M116 170L515 120M515 120L430 260"/><path d="M280 475V210M280 210H520"/></g>
+<!-- subtle vignette -->
+<rect width="1600" height="760" fill="none" stroke="#061d27" stroke-width="80" opacity=".25"/>
+</svg>

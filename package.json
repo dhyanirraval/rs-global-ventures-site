@@ -1,0 +1,7 @@
+{
+  "name": "rs-global-ventures-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RS Global Ventures export website with password-protected catalog admin",
+  "scripts": {"start": "python server.py"}
+}
