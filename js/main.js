@@ -13,8 +13,7 @@ function initSite() {
   // Mobile menu toggle
   if (menuBtn && navLinks) {
     menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
-    // Close menu when clicking nav links
-    navLinks.querySelectorAll('a').forEach(a => 
+    navLinks.querySelectorAll('a').forEach(a =>
       a.addEventListener('click', () => navLinks.classList.remove('open'))
     );
   }
@@ -27,7 +26,7 @@ function initSite() {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          navAnchors.forEach(a => 
+          navAnchors.forEach(a =>
             a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id)
           );
         }
@@ -49,15 +48,57 @@ function initSite() {
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // Quote form handling
+  // Contact form handling
   const quoteForm = document.getElementById('quoteForm');
   if (quoteForm) {
-    quoteForm.addEventListener('submit', e => {
+    quoteForm.addEventListener('submit', async e => {
       e.preventDefault();
+      const form = e.currentTarget;
       const status = document.getElementById('formStatus');
-      if (status) {
-        status.style.display = 'block';
-        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+
+      required.forEach(field => {
+        if (!field.value.trim()) valid = false;
+      });
+
+      if (!valid) {
+        if (status) {
+          status.textContent = 'Please complete all required fields before submitting.';
+          status.style.display = 'block';
+          status.style.color = '#b42318';
+        }
+        return;
+      }
+
+      const body = Object.fromEntries(new FormData(form).entries());
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Submission failed.');
+
+        form.reset();
+        if (status) {
+          status.textContent = 'Thank you for contacting RS Global Ventures. Your inquiry has been received. Our team will get back to you shortly.';
+          status.style.display = 'block';
+          status.style.color = '#0f766e';
+        }
+      } catch (error) {
+        if (status) {
+          status.textContent = error.message || 'There was a problem sending your inquiry. Please try again or contact us by WhatsApp.';
+          status.style.display = 'block';
+          status.style.color = '#b42318';
+        }
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     });
   }
@@ -67,20 +108,32 @@ function initSite() {
   if (year) year.textContent = new Date().getFullYear();
 
   // WhatsApp integration
-  const WHATSAPP_NUMBER = '';
+  const WHATSAPP_NUMBER = '919979267148';
+  const WHATSAPP_URL = 'https://wa.me/919979267148?text=Hello%20RS%20Global%20Ventures%2C%20I%20am%20interested%20in%20your%20products%20and%20would%20like%20to%20know%20more.';
 
   function openWhatsAppInquiry() {
-    const message = 'Hello RS Global Ventures, I would like to make an export inquiry. Please share product details, MOQ, pricing, and shipping options.';
-    if (!WHATSAPP_NUMBER) {
-      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-      alert('Please add your WhatsApp number in the WHATSAPP_NUMBER setting in js/main.js before launch.');
-      return;
+    const w = window.open(WHATSAPP_URL, '_blank');
+    if (w) w.opener = null;
+  }
+
+  function updateWhatsAppPosition() {
+    const float = document.getElementById('whatsappFloat');
+    const footer = document.querySelector('footer');
+    if (!float || !footer) return;
+    const fRect = float.getBoundingClientRect();
+    const footRect = footer.getBoundingClientRect();
+    if (fRect.bottom > footRect.top) {
+      float.classList.add('lift-up');
+    } else {
+      float.classList.remove('lift-up');
     }
-    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
   }
 
   document.getElementById('whatsappFloat')?.addEventListener('click', openWhatsAppInquiry);
   document.getElementById('heroWhatsAppBtn')?.addEventListener('click', openWhatsAppInquiry);
+  window.addEventListener('scroll', updateWhatsAppPosition, { passive: true });
+  window.addEventListener('resize', updateWhatsAppPosition);
+  setTimeout(updateWhatsAppPosition, 600);
 }
 
 window.addEventListener('sections:loaded', initSite);

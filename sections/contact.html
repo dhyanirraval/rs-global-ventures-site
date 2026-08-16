@@ -3,62 +3,61 @@
     <div class="reveal">
       <div class="eyebrow">Contact us</div>
       <h2 class="section-title">Tell us what you need.</h2>
-      <p class="section-copy">We are ready to review product requirements, packing specifications, and destination needs.</p>
+      <p class="section-copy">Share your product requirements, packing specifications, destination needs and target timeline. Our team will respond with the right sourcing and export support.</p>
       <div class="contact-info">
         <div>
-          <strong>WhatsApp & Phone</strong>
-          <span>Available for product enquiries and shipping conversations</span>
-        </div>
-        <div>
           <strong>Email</strong>
-          <span>inquiry@rsglobalventures.com</span>
+          <span><a href="mailto:info@rsglobalventures.in">info@rsglobalventures.in</a></span>
         </div>
         <div>
-          <strong>Response Time</strong>
-          <span>Prompt communication for new export enquiries</span>
+          <strong>WhatsApp</strong>
+          <span><a href="https://wa.me/919979267148?text=Hello%20RS%20Global%20Ventures%2C%20I%20am%20interested%20in%20your%20products%20and%20would%20like%20to%20know%20more." target="_blank" rel="noopener">+91 99792 67148</a></span>
         </div>
       </div>
+      <div style="margin-top:20px">
+        <a class="btn btn--gold" href="#quoteForm">Start a Business Inquiry</a>
+      </div>
     </div>
-    <div class="contact-card reveal">
-      <form id="quoteForm">
-        <h3 style="margin-bottom:20px">Export Inquiry Form</h3>
+    <div class="contact-card reveal" id="contactFormPanel">
+      <form id="quoteForm" novalidate>
+        <h3 style="margin-bottom:20px">Business Inquiry Form</h3>
         <div class="form-grid">
           <div class="field">
-            <label>Your Full Name</label>
-            <input type="text" placeholder="Your name" required>
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" placeholder="Your full name" required>
           </div>
           <div class="field">
-            <label>Company Name</label>
-            <input type="text" placeholder="Company" required>
+            <label for="company">Company Name</label>
+            <input id="company" name="company" type="text" placeholder="Your company" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone / WhatsApp</label>
+            <input id="phone" name="phone" type="tel" placeholder="+91 ..." required>
+          </div>
+          <div class="field">
+            <label for="country">Country</label>
+            <input id="country" name="country" type="text" placeholder="Destination country" required>
+          </div>
+          <div class="field">
+            <label for="category">Product / Category</label>
+            <input id="category" name="category" type="text" placeholder="Spices, grains, pulses, etc." required>
           </div>
           <div class="field full">
-            <label>Email Address</label>
-            <input type="email" placeholder="email@company.com" required>
-          </div>
-          <div class="field">
-            <label>Country of Interest</label>
-            <input type="text" placeholder="Destination country" required>
-          </div>
-          <div class="field">
-            <label>Category of Interest</label>
-            <select required>
-              <option value="">Select a category</option>
-              <option>Spices</option>
-              <option>Grains & cereals</option>
-              <option>Pulses</option>
-              <option>Vegetables</option>
-              <option>Fruits</option>
-              <option>Dehydrated products</option>
-            </select>
+            <label for="quantity">Quantity / Requirement</label>
+            <textarea id="quantity" name="quantity" placeholder="Approximate quantity, packaging, urgency, destination, specifications" required></textarea>
           </div>
           <div class="field full">
-            <label>Your Requirement</label>
-            <textarea placeholder="Tell us your product needs, quantity, packing pattern, and destination details." required></textarea>
+            <label for="message">Message / Inquiry</label>
+            <textarea id="message" name="message" placeholder="Tell us more about your requirement" required></textarea>
           </div>
         </div>
-        <p class="form-note">By submitting, you agree to our privacy policy and terms of service.</p>
+        <p class="form-note">Your inquiry will be sent securely to RS Global Ventures.</p>
         <button type="submit" class="btn btn--gold" style="margin-top:14px">Send Inquiry</button>
-        <p class="form-status" id="formStatus">✓ Your inquiry has been received. We will respond soon.</p>
+        <p class="form-status" id="formStatus" aria-live="polite"></p>
       </form>
     </div>
   </div>

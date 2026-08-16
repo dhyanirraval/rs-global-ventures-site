@@ -7,9 +7,12 @@ import mimetypes
 import os
 import re
 import secrets
+import smtplib
 import time
+from email.message import EmailMessage
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib import parse, request
 from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -19,12 +22,93 @@ CATALOG_FILE = DATA_DIR / 'catalog.json'
 DATA_DIR.mkdir(exist_ok=True)
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@rsglobalventures.com')
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'RSGV@2026!')
-SESSION_SECRET = os.environ.get('SESSION_SECRET', 'change-this-session-secret')
+
+def load_env_file():
+    env_file = ROOT / '.env'
+    if not env_file.exists():
+        return
+    for line in env_file.read_text(encoding='utf-8').splitlines():
+        line = line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        key, value = line.split('=', 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+
+load_env_file()
+
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+SESSION_SECRET = os.environ.get('SESSION_SECRET', 'replace-with-a-long-random-secret')
 PORT = int(os.environ.get('PORT', '3000'))
 SESSION_TTL = 8 * 60 * 60
+CONTACT_EMAIL_TO = os.environ.get('CONTACT_EMAIL_TO', 'info@rsglobalventures.in')
+MAIL_FROM = os.environ.get('MAIL_FROM', CONTACT_EMAIL_TO)
+SMTP_HOST = os.environ.get('SMTP_HOST', '')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', '587') or '587')
+SMTP_USERNAME = os.environ.get('SMTP_USERNAME', '')
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
+SMTP_USE_TLS = os.environ.get('SMTP_USE_TLS', 'true').lower() in {'1', 'true', 'yes'}
+CONTACT_WEBHOOK_URL = os.environ.get('CONTACT_WEBHOOK_URL', '')
+CONTACT_WEBHOOK_TOKEN = os.environ.get('CONTACT_WEBHOOK_TOKEN', '')
+
 sessions: dict[str, float] = {}
+
+
+def send_contact_email(payload: dict) -> tuple[bool, str]:
+    if CONTACT_WEBHOOK_URL:
+        body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+        req = request.Request(
+            CONTACT_WEBHOOK_URL,
+            data=body,
+            headers={'Content-Type': 'application/json', 'User-Agent': 'RSGlobalVenturesContact/1.0'}
+        )
+        if CONTACT_WEBHOOK_TOKEN:
+            req.add_header('Authorization', f'Bearer {CONTACT_WEBHOOK_TOKEN}')
+        try:
+            with request.urlopen(req, timeout=15) as response:
+                return response.status in {200, 201, 202, 204}, 'Webhook accepted the message.'
+        except Exception as exc:
+            return False, f'Webhook delivery failed: {exc}'
+
+    if not SMTP_HOST:
+        return False, 'Email delivery is not configured. Set SMTP_HOST and related environment variables.'
+
+    message = EmailMessage()
+    message['Subject'] = 'New Business Inquiry – RS Global Ventures'
+    message['From'] = MAIL_FROM
+    message['To'] = CONTACT_EMAIL_TO
+    if payload.get('email'):
+        message['Reply-To'] = payload['email']
+
+    details = []
+    for key, label in [
+        ('name', 'Name'),
+        ('company', 'Company'),
+        ('email', 'Email'),
+        ('phone', 'Phone / WhatsApp'),
+        ('country', 'Country'),
+        ('category', 'Product / Category'),
+        ('quantity', 'Quantity / Requirement'),
+        ('message', 'Message'),
+    ]:
+        value = payload.get(key, '').strip()
+        if value:
+            details.append(f'{label}: {value}')
+
+    message.set_content('\n\n'.join(details) if details else 'No details provided.')
+    try:
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as smtp:
+            if SMTP_USE_TLS:
+                smtp.starttls()
+            if SMTP_USERNAME and SMTP_PASSWORD:
+                smtp.login(SMTP_USERNAME, SMTP_PASSWORD)
+            smtp.send_message(message)
+        return True, 'Email sent successfully.'
+    except Exception as exc:
+        return False, f'Email delivery failed: {exc}'
 
 
 def read_catalog():
@@ -134,6 +218,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self.upload_image()
         if path == '/api/admin/catalog':
             return self.save_catalog_item()
+        if path == '/api/contact':
+            return self.submit_contact_form()
         self.send_json({'error': 'Not found'}, 404)
 
     def do_DELETE(self):
@@ -285,6 +371,37 @@ class Handler(SimpleHTTPRequestHandler):
                     file_path.unlink()
         write_catalog([x for x in catalog if x.get('id') not in ids])
         self.send_json({'ok': True, 'deleted': list(ids)})
+
+    def submit_contact_form(self):
+        raw = self.read_body(250_000)
+        if raw is None:
+            return
+        try:
+            payload = json.loads(raw.decode('utf-8') or '{}')
+        except Exception:
+            return self.send_json({'error': 'Invalid request body.'}, 400)
+
+        required = ['name', 'company', 'email', 'phone', 'country', 'category', 'quantity', 'message']
+        cleaned = {}
+        for key in required:
+            value = str(payload.get(key, '') or '').strip()
+            if not value:
+                return self.send_json({'error': f'{key} is required.'}, 400)
+            cleaned[key] = value
+
+        if '@' not in cleaned['email'] or '.' not in cleaned['email']:
+            return self.send_json({'error': 'Please enter a valid email address.'}, 400)
+
+        # Basic anti-spam guard: block obviously empty/overlong values and repeated submissions by same email in quick succession.
+        # This is intentionally lightweight and does not expose credentials.
+        email = cleaned['email'].lower()
+        if any(char in email for char in ['<', '>', ';', '\n', '\r']):
+            return self.send_json({'error': 'Invalid email address.'}, 400)
+
+        ok, msg = send_contact_email(cleaned)
+        if not ok:
+            return self.send_json({'error': msg}, 500)
+        return self.send_json({'ok': True, 'message': 'Thank you for contacting RS Global Ventures. Your inquiry has been received. Our team will get back to you shortly.'})
 
 
 if __name__ == '__main__':

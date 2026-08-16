@@ -46,12 +46,15 @@ button,input,textarea,select{font:inherit}
 .whatsapp-float:hover{transform:translateY(-3px) scale(1.03)}
 .whatsapp-label{position:absolute;right:70px;white-space:nowrap;background:#063d32;color:#fff;padding:8px 12px;border-radius:10px;font-size:.7rem;font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.12);opacity:0;pointer-events:none;transform:translateX(6px);transition:.2s}
 .whatsapp-float:hover .whatsapp-label{opacity:1;transform:none}
+/* lift-up helper when overlapping footer */
+.whatsapp-float.lift-up{bottom:120px !important}
 .hero{min-height:700px;background-position:center;background-size:cover}
 .hero-grid{grid-template-columns:1fr;min-height:700px}.hero-copy{max-width:720px}.hero-orbit{display:none}
 .hero h1{font-size:clamp(3.2rem,6.5vw,6rem)}
 .hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(to top,rgba(3,25,31,.35),transparent);pointer-events:none}
 .credential-note{font-size:.68rem;color:#8a806a;margin-top:8px}
 @media(max-width:760px){.topbar{height:auto;padding:7px 0}.topbar .container{flex-direction:column;gap:4px;align-items:flex-start}.topbar-right{display:none}.compliance-grid{grid-template-columns:1fr}.compliance-item{border-right:0;border-bottom:1px solid #eadfc6;padding:13px 16px}.compliance-item:last-child{border-bottom:0}.whatsapp-float{right:16px;bottom:16px;width:56px;height:56px}.whatsapp-label{display:none}.hero,.hero-grid{min-height:760px}.hero-copy{padding-top:30px}}
+@media(max-width:760px){.whatsapp-float.lift-up{bottom:160px !important}}
 
 /* Header */
 .site-header{position:sticky;z-index:1000;top:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(18px);box-shadow:0 8px 28px rgba(4,40,33,.08);border-bottom:1px solid rgba(6,61,50,.08);transition:.3s ease}
@@ -82,6 +85,41 @@ button,input,textarea,select{font:inherit}
 .hero-points{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
 .hero-points span{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.78)}
 .hero-points i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(217,154,24,.12)}
+
+/* Logistics scene elements (subtle, performant) */
+.logistics-scene{position:absolute;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+.logistics-scene .sun{position:absolute;left:8%;top:8%;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffd89b,#f2b431);opacity:.9;filter:blur(2px)}
+.logistics-scene .cloud{position:absolute;background:rgba(255,255,255,.85);height:26px;border-radius:30px;box-shadow:0 6px 18px rgba(0,0,0,.06);opacity:.9}
+.logistics-scene .cloud.c1{left:-20%;top:12%;width:220px}
+.logistics-scene .cloud.c2{left:-30%;top:22%;width:160px;opacity:.85}
+.logistics-scene .cloud.c3{left:-10%;top:6%;width:120px;opacity:.8}
+.logistics-scene .plane{position:absolute;right:6%;top:8%;font-size:1.1rem;color:rgba(255,255,255,.85);transform:translateX(0)}
+.logistics-scene .horizon{position:absolute;left:0;right:0;bottom:20%;height:28%;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(2,18,22,.18) 60%);opacity:.65}
+.logistics-scene .wave{position:absolute;left:0;right:0;bottom:3%;height:18%;background:linear-gradient(180deg,rgba(3,53,63,.06),rgba(3,53,63,.18));opacity:.9}
+.logistics-scene .ship-wrap{position:absolute;left:-20%;bottom:18%;width:60%;height:140px;display:flex;align-items:flex-end}
+.logistics-scene .ship{width:240px;height:74px;position:relative;transform:translateX(0)}
+.logistics-scene .ship .deck{position:absolute;left:0;right:0;bottom:10px;height:28px;background:#0b3f35;border-radius:6px}
+.logistics-scene .ship .cab{position:absolute;right:12px;bottom:38px;width:36px;height:26px;background:#063d32;border-radius:6px}
+.logistics-scene .ship .container-stack{position:absolute;left:12px;bottom:40px;display:flex;gap:6px}
+.logistics-scene .ship .container-stack span{width:18px;height:12px;background:linear-gradient(180deg,#d99a18,#f2b431);display:inline-block;border-radius:2px}
+
+/* Animations */
+@keyframes cloudMove{from{transform:translateX(0)}to{transform:translateX(140%)} }
+@keyframes shipSail{from{transform:translateX(-18%)}to{transform:translateX(120%)} }
+@keyframes gentleBob{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+.logistics-scene .cloud.c1{animation:cloudMove 60s linear infinite}
+.logistics-scene .cloud.c2{animation:cloudMove 80s linear infinite}
+.logistics-scene .cloud.c3{animation:cloudMove 100s linear infinite}
+.logistics-scene .ship{animation:shipSail 55s linear infinite}
+.logistics-scene .ship, .logistics-scene .sun{will-change:transform;}
+.logistics-scene .ship{animation-timing-function:linear}
+.logistics-scene .ship .deck{animation:gentleBob 6s ease-in-out infinite}
+
+/* ensure text readability and reduce motion preferences */
+@media (prefers-reduced-motion:reduce){
+  .logistics-scene .cloud,.logistics-scene .ship,.logistics-scene .sun{animation:none !important}
+}
 
 /* About */
 .about-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:65px;align-items:center}
