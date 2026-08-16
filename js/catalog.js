@@ -6,6 +6,48 @@ let currentLevel = 'category';
 let currentNodeId = null;
 const DEFAULT_IMAGE = '/default-product.svg';
 
+function normalizeStaticProducts(data) {
+  if (!Array.isArray(data) || !data.length) return [];
+  return data.map(item => ({
+    id: item.id,
+    type: item.type,
+    parentId: item.parentId || null,
+    name: item.name || 'Product',
+    tag: item.tag || 'Product',
+    description: item.description || 'Product information coming soon.',
+    image: item.image || DEFAULT_IMAGE
+  }));
+}
+
+function getStaticCatalog() {
+  const data = window.RSGV_PRODUCTS || [];
+  return normalizeStaticProducts(data);
+}
+
+function buildEmptyCatalogState() {
+  const emptyCatalog = [
+    {
+      id: 'cat-temp',
+      type: 'category',
+      parentId: null,
+      name: 'Temporary Catalog',
+      tag: 'Static placeholder',
+      description: 'No product data is available yet. Add final product listings to the local data file when ready.',
+      image: DEFAULT_IMAGE
+    },
+    {
+      id: 'prod-temp',
+      type: 'product',
+      parentId: 'cat-temp',
+      name: 'Product Information Coming Soon',
+      tag: 'Temporary placeholder',
+      description: 'This section is intentionally left generic until final product data is confirmed.',
+      image: DEFAULT_IMAGE
+    }
+  ];
+  return emptyCatalog;
+}
+
 function children(parentId, type) {
   return catalog.filter(x => x.parentId === parentId && (!type || x.type === type));
 }
@@ -56,7 +98,7 @@ function typeLabel(type) {
 }
 
 function esc(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({
+  return String(s ?? '').replace(/[&<>\"']/g, c => ({
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -134,8 +176,8 @@ function renderCatalog() {
 
   const items = document.getElementById('productItems');
   items.innerHTML = relatedProducts.length
-    ? relatedProducts.map(p => `<article class="item-card" data-product="${p.id}"><div class="item-image" style="background-image:url('${String(p.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')"></div><div class="item-body"><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><div class="item-meta">${esc(p.tag || 'Product')} · ${children(p.id, 'variant').length} variants</div></div></article>`).join('')
-    : '<div class="empty-state" style="grid-column:1/-1">No products added here yet.</div>';
+    ? relatedProducts.map(p => `<article class="item-card" data-product="${p.id}"><div class="item-image" style="background-image:url('${String(p.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')"></div><div class="item-body"><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><div class="item-meta">${esc(p.tag || 'Product')}</div></div></article>`).join('')
+    : '<div class="empty-state" style="grid-column:1/-1">Product information coming soon.</div>';
   items.querySelectorAll('[data-product]').forEach(el => el.onclick = () => openProduct(el.dataset.product));
 }
 
@@ -170,26 +212,17 @@ function openProduct(id) {
   document.getElementById('detailImage').style.backgroundImage = `url('${String(product.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')`;
   document.getElementById('detailVariants').innerHTML = variants.length
     ? variants.map(v => `<div class="variant-card"><strong>${esc(v.name)}</strong><span>${esc(v.description || v.tag || 'Export-ready variant')}</span></div>`).join('')
-    : '<div class="variant-card"><strong>Multiple types available on request</strong><span>Contact RS Global Ventures for grades, sizes, cleaning levels, cuts and packaging options.</span></div>';
+    : '<div class="variant-card"><strong>Product information coming soon</strong><span>Contact RS Global Ventures to request an export quotation for this category when final details are confirmed.</span></div>';
   openModal('productModal');
 }
 
-async function loadCatalog() {
-  try {
-    const res = await fetch('/api/catalog', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Catalog request failed');
-    catalog = await res.json();
-    currentCategoryId = topCategories()[0]?.id || null;
-    currentNodeId = currentCategoryId;
-    renderCategoryCards();
-    renderCatalog();
-  } catch (err) {
-    console.error(err);
-    const categoryCards = document.getElementById('categoryCards');
-    if (categoryCards) {
-      categoryCards.innerHTML = '<div class="empty-state" style="grid-column:1/-1">Catalog is temporarily unavailable. Please try again shortly.</div>';
-    }
-  }
+function loadCatalog() {
+  const staticData = getStaticCatalog();
+  catalog = staticData.length ? staticData : buildEmptyCatalogState();
+  currentCategoryId = topCategories()[0]?.id || null;
+  currentNodeId = currentCategoryId;
+  renderCategoryCards();
+  renderCatalog();
 }
 
 function initCatalog() {
@@ -198,7 +231,7 @@ function initCatalog() {
   if (!openCatalogBtn || !closeCatalogBtn) return;
 
   openCatalogBtn.onclick = () => {
-    if (!catalog.length) return loadCatalog();
+    loadCatalog();
     openCatalog(currentCategoryId);
   };
 
