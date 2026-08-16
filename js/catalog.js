@@ -176,9 +176,22 @@ function renderCatalog() {
 
   const items = document.getElementById('productItems');
   items.innerHTML = relatedProducts.length
-    ? relatedProducts.map(p => `<article class="item-card" data-product="${p.id}"><div class="item-image" style="background-image:url('${String(p.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')"></div><div class="item-body"><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><div class="item-meta">${esc(p.tag || 'Product')}</div></div></article>`).join('')
+    ? relatedProducts.map(p => `<article class="item-card" data-product="${p.id}"><div class="item-image" style="background-image:url('${String(p.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')"></div><div class="item-body"><h4>${esc(p.name)}</h4><p>${esc(p.description)}</p><div class="item-meta">${esc(p.tag || 'Product')}</div><div class="item-actions"><button type="button" class="btn btn--gold btn--small" data-quote="${esc(p.id)}">Request a Quote</button><button type="button" class="btn btn--outline btn--small" data-message="${esc(p.id)}">Send a Message</button></div></div></article>`).join('')
     : '<div class="empty-state" style="grid-column:1/-1">Product information coming soon.</div>';
-  items.querySelectorAll('[data-product]').forEach(el => el.onclick = () => openProduct(el.dataset.product));
+  items.querySelectorAll('[data-product]').forEach(el => el.addEventListener('click', e => {
+    if (e.target.closest('[data-quote]') || e.target.closest('[data-message]')) return;
+    openProduct(el.dataset.product);
+  }));
+  items.querySelectorAll('[data-quote]').forEach(btn => btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const product = byId(btn.dataset.quote);
+    if (product) window.prepareProductInquiry?.(product.name);
+  }));
+  items.querySelectorAll('[data-message]').forEach(btn => btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const product = byId(btn.dataset.message);
+    if (product) window.openProductWhatsApp?.(product.name);
+  }));
 }
 
 function renderBreadcrumbs() {
@@ -212,7 +225,11 @@ function openProduct(id) {
   document.getElementById('detailImage').style.backgroundImage = `url('${String(product.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')`;
   document.getElementById('detailVariants').innerHTML = variants.length
     ? variants.map(v => `<div class="variant-card"><strong>${esc(v.name)}</strong><span>${esc(v.description || v.tag || 'Export-ready variant')}</span></div>`).join('')
-    : '<div class="variant-card"><strong>Product information coming soon</strong><span>Contact RS Global Ventures to request an export quotation for this category when final details are confirmed.</span></div>';
+    : '<div class="variant-card"><strong>Buyer-specific requirements</strong><span>Ask us about grade, packing, quantity and destination requirements.</span></div>';
+  const quoteBtn = document.getElementById('detailQuoteBtn');
+  const messageBtn = document.getElementById('detailMessageBtn');
+  if (quoteBtn) quoteBtn.onclick = () => window.prepareProductInquiry?.(product.name);
+  if (messageBtn) messageBtn.onclick = () => window.openProductWhatsApp?.(product.name);
   openModal('productModal');
 }
 
