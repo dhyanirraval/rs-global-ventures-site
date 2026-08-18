@@ -10,7 +10,7 @@ window.RSGV_PRODUCTS = [
   { id:'cat-cereals', type:'category', parentId:null, name:'Cereals', tag:'Indian grains', description:'Indian grains and rice products for international buyers, with specifications and packing tailored to the enquiry.', image:'/assets/categories/cereals.jpg' },
   { id:'cer-basmati', type:'product', parentId:'cat-cereals', name:'Basmati Rice', tag:'Cereals', description:'Indian Basmati rice for export enquiries. Grade, grain specification, packing and shipment requirements can be discussed.', image:'/assets/products/cer-basmati.webp' },
   { id:'cer-nonbasmati', type:'product', parentId:'cat-cereals', name:'Non-Basmati Rice', tag:'Cereals', description:'Indian non-Basmati rice for bulk sourcing and export requirements, subject to availability and buyer specifications.', image:'/assets/products/cer-nonbasmati.jpg' },
-  { id:'cer-wheat', type:'product', parentId:'cat-cereals', name:'Wheat', tag:'Cereals', description:'Indian wheat for bulk trade enquiries, with specifications and packing based on buyer requirements.', image:'/assets/products/cer-wheat.svg' },
+  { id:'cer-wheat', type:'product', parentId:'cat-cereals', name:'Wheat', tag:'Cereals', description:'Indian wheat for bulk trade enquiries, with specifications and packing based on buyer requirements.', image:'/assets/products/wheat.jpg' },
   { id:'cer-maize', type:'product', parentId:'cat-cereals', name:'Maize', tag:'Cereals', description:'Indian maize for international sourcing enquiries and bulk requirements.', image:'/assets/products/cer-maize.jpeg' },
 
   // Spices
@@ -26,10 +26,10 @@ window.RSGV_PRODUCTS = [
 
   // Dehydrated products
   { id:'cat-dehydrated', type:'category', parentId:null, name:'Dehydrated Products', tag:'Value-added ingredients', description:'Dehydrated Indian ingredients for food processors, traders and bulk export enquiries.', image:'/assets/categories/dehydrated.webp' },
-  { id:'dep-onion-flakes', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Onion Flakes', tag:'Dehydrated Products', description:'Dehydrated onion flakes for bulk food ingredient and export enquiries.', image:'/assets/products/dep-onion-flakes.svg' },
-  { id:'dep-garlic-flakes', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Garlic Flakes', tag:'Dehydrated Products', description:'Dehydrated garlic flakes for food ingredient sourcing and export requirements.', image:'/assets/products/dep-garlic-flakes.svg' },
-  { id:'dep-onion-powder', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Onion Powder', tag:'Dehydrated Products', description:'Dehydrated onion powder for bulk ingredient enquiries, subject to grade and specification.', image:'/assets/products/dep-onion-powder.svg' },
-  { id:'dep-garlic-powder', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Garlic Powder', tag:'Dehydrated Products', description:'Dehydrated garlic powder for food ingredient and export enquiries.', image:'/assets/products/dep-garlic-powder.svg' },
+  { id:'dep-onion-flakes', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Onion Flakes', tag:'Dehydrated Products', description:'Dehydrated onion flakes for bulk food ingredient and export enquiries.', image:'/assets/products/dehydrated-onion-flake.webp' },
+  { id:'dep-garlic-flakes', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Garlic Flakes', tag:'Dehydrated Products', description:'Dehydrated garlic flakes for food ingredient sourcing and export requirements.', image:'/assets/products/dehydrated-garlic-flakes.webp' },
+  { id:'dep-onion-powder', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Onion Powder', tag:'Dehydrated Products', description:'Dehydrated onion powder for bulk ingredient enquiries, subject to grade and specification.', image:'/assets/products/organic-red-onion-powder.webp' },
+  { id:'dep-garlic-powder', type:'product', parentId:'cat-dehydrated', name:'Dehydrated Garlic Powder', tag:'Dehydrated Products', description:'Dehydrated garlic powder for food ingredient and export enquiries.', image:'/assets/products/dehydrated-garlic-powder.webp' },
 
   // Pulses
   { id:'cat-pulses', type:'category', parentId:null, name:'Pulses', tag:'Indian pulses & dals', description:'Indian pulses for wholesale, food-service and international sourcing requirements.', image:'/assets/categories/pulses.jpg' },
@@ -40,7 +40,7 @@ window.RSGV_PRODUCTS = [
   // Fruits
   { id:'cat-fruits', type:'category', parentId:null, name:'Fruits', tag:'Fresh Indian produce', description:'Fresh Indian fruit sourcing for international enquiries, subject to season, destination and availability.', image:'/assets/categories/fruits.jpg' },
   { id:'fr-plums', type:'product', parentId:'cat-fruits', name:'Fresh Plums', tag:'Fruits', description:'Indian fresh plums sourcing for seasonal export enquiries. Variety, grade and packing are discussed per destination.', image:'/assets/products/plums.webp' },
-  { id:'fr-mango', type:'product', parentId:'cat-fruits', name:'Fresh Mango', tag:'Fruits', description:'Indian fresh mango sourcing for seasonal export enquiries. Variety, grade and packing are discussed per destination.', image:'/assets/products/fr-mango.svg' },
+  // { id:'fr-mango', type:'product', parentId:'cat-fruits', name:'Fresh Mango', tag:'Fruits', description:'Indian fresh mango sourcing for seasonal export enquiries. Variety, grade and packing are discussed per destination.', image:'/assets/products/fr-mango.svg' },
   { id:'fr-guava', type:'product', parentId:'cat-fruits', name:'Fresh Guava', tag:'Fruits', description:'Indian fresh guava sourcing for export enquiries, subject to season, grade and buyer requirements.', image:'/assets/products/fr-guava.jpg' },
   { id:'fr-pomegranate', type:'product', parentId:'cat-fruits', name:'Fresh Pomegranate', tag:'Fruits', description:'Indian pomegranate sourcing for export enquiries, subject to season and buyer specifications.', image:'/assets/products/fr-pomegranate.webp' },
   { id:'fr-banana', type:'product', parentId:'cat-fruits', name:'Fresh Banana', tag:'Fruits', description:'Indian banana sourcing for wholesale and export enquiries, subject to season and destination requirements.', image:'/assets/products/fr-banana.jpg' }
