@@ -15,14 +15,14 @@ window.RSGV_PRODUCTS = [
 
   // Spices
   { id:'cat-spices', type:'category', parentId:null, name:'Spices', tag:'Whole & ground spices', description:'A selection of Indian whole and ground spices for global food and trading requirements.', image:'/assets/categories/spices.webp' },
-  { id:'sp-cumin', type:'product', parentId:'cat-spices', name:'Cumin Seeds', tag:'Spices', description:'Indian cumin seeds for bulk export enquiries. Grade, cleaning and packing requirements can be discussed.', image:'/assets/products/sp-cumin.svg' },
-  { id:'sp-coriander', type:'product', parentId:'cat-spices', name:'Coriander Seeds', tag:'Spices', description:'Indian coriander seeds for international sourcing and bulk trade enquiries.', image:'/assets/products/sp-coriander.svg' },
-  { id:'sp-fennel', type:'product', parentId:'cat-spices', name:'Fennel Seeds', tag:'Spices', description:'Indian fennel seeds for export enquiries, subject to grade and availability.', image:'/assets/products/sp-fennel.svg' },
-  { id:'sp-fenugreek', type:'product', parentId:'cat-spices', name:'Fenugreek Seeds', tag:'Spices', description:'Indian fenugreek seeds for wholesale and export requirements.', image:'/assets/products/sp-fenugreek.svg' },
-  { id:'sp-dill', type:'product', parentId:'cat-spices', name:'Dill Seeds', tag:'Spices', description:'Indian dill seeds for bulk sourcing enquiries.', image:'/assets/products/sp-dill.svg' },
-  { id:'sp-pepper', type:'product', parentId:'cat-spices', name:'Black Pepper', tag:'Spices', description:'Indian black pepper for international buyer enquiries and bulk sourcing.', image:'/assets/products/sp-pepper.svg' },
-  { id:'sp-turmeric', type:'product', parentId:'cat-spices', name:'Turmeric Powder', tag:'Spices', description:'Indian turmeric powder for export enquiries, with packing and specification options based on buyer requirements.', image:'/assets/products/sp-turmeric.svg' },
-  { id:'sp-chilli', type:'product', parentId:'cat-spices', name:'Red Chilli Powder', tag:'Spices', description:'Indian red chilli powder for bulk sourcing and export enquiries.', image:'/assets/products/sp-chilli.svg' },
+  { id:'sp-cumin', type:'product', parentId:'cat-spices', name:'Cumin Seeds', tag:'Spices', description:'Indian cumin seeds for bulk export enquiries. Grade, cleaning and packing requirements can be discussed.', image:'/assets/products/cumin_seeds.jpg' },
+  { id:'sp-coriander', type:'product', parentId:'cat-spices', name:'Coriander Seeds', tag:'Spices', description:'Indian coriander seeds for international sourcing and bulk trade enquiries.', image:'/assets/products/coriander_seeds.webp' },
+  { id:'sp-fennel', type:'product', parentId:'cat-spices', name:'Fennel Seeds', tag:'Spices', description:'Indian fennel seeds for export enquiries, subject to grade and availability.', image:'/assets/products/fennel-seeds.jpg' },
+  { id:'sp-fenugreek', type:'product', parentId:'cat-spices', name:'Fenugreek Seeds', tag:'Spices', description:'Indian fenugreek seeds for wholesale and export requirements.', image:'/assets/products/fenugreek_seeds.webp' },
+  { id:'sp-dill', type:'product', parentId:'cat-spices', name:'Dill Seeds', tag:'Spices', description:'Indian dill seeds for bulk sourcing enquiries.', image:'/assets/products/dill_seeds.jpeg' },
+  { id:'sp-pepper', type:'product', parentId:'cat-spices', name:'Black Pepper', tag:'Spices', description:'Indian black pepper for international buyer enquiries and bulk sourcing.', image:'/assets/products/black-pepper.jpg' },
+  { id:'sp-turmeric', type:'product', parentId:'cat-spices', name:'Turmeric Powder', tag:'Spices', description:'Indian turmeric powder for export enquiries, with packing and specification options based on buyer requirements.', image:'/assets/products/turmaric_powder.webp' },
+  { id:'sp-chilli', type:'product', parentId:'cat-spices', name:'Red Chilli Powder', tag:'Spices', description:'Indian red chilli powder for bulk sourcing and export enquiries.', image:'/assets/products/Red_Chilli_Powder.webp' },
 
   // Dehydrated products
   { id:'cat-dehydrated', type:'category', parentId:null, name:'Dehydrated Products', tag:'Value-added ingredients', description:'Dehydrated Indian ingredients for food processors, traders and bulk export enquiries.', image:'/assets/categories/dehydrated.webp' },
