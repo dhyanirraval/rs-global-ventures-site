@@ -2,7 +2,6 @@
 
 let catalog = [];
 let currentCategoryId = null;
-let currentLevel = 'category';
 let currentNodeId = null;
 const DEFAULT_IMAGE = '/default-product.svg';
 
@@ -71,10 +70,7 @@ function ensureCatalogSelection() {
     currentNodeId = currentCategoryId;
   }
   const currentNode = byId(currentNodeId);
-  if (currentNode && currentNode.type !== 'category' && currentNode.type !== 'subcategory' && currentNode.type !== 'product') {
-    currentNodeId = currentCategoryId;
-  }
-  currentLevel = byId(currentNodeId)?.type === 'subcategory' ? 'subcategory' : 'category';
+  if (currentNode && currentNode.type !== 'category') currentNodeId = currentCategoryId;
 }
 
 function openCatalog(id) {
@@ -82,7 +78,6 @@ function openCatalog(id) {
   if (!target) return;
   currentCategoryId = target.type === 'category' ? target.id : (byId(target.parentId)?.id || topCategories()[0]?.id || target.id);
   currentNodeId = currentCategoryId;
-  currentLevel = 'category';
   const catalogShell = document.getElementById('catalogShell');
   if (catalogShell) catalogShell.classList.add('open');
   renderCatalog();
@@ -91,7 +86,6 @@ function openCatalog(id) {
 function typeLabel(type) {
   return ({
     category: 'Category',
-    subcategory: 'Subcategory',
     product: 'Product',
     variant: 'Variant'
   })[type] || type;
@@ -137,8 +131,7 @@ function renderCatalog() {
 
   side.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => {
     currentCategoryId = b.dataset.cat;
-    currentLevel = 'category';
-    currentNodeId = currentCategoryId;
+      currentNodeId = currentCategoryId;
     renderCatalog();
   });
 
@@ -148,31 +141,8 @@ function renderCatalog() {
 
   renderBreadcrumbs();
 
-  const subRow = document.getElementById('subcategoryRow');
-  let relatedProducts = [];
-
-  if (currentLevel === 'category') {
-    const subs = children(node.id, 'subcategory');
-    subRow.innerHTML = subs.length
-      ? subs.map(x => `<button class="subcat-pill" data-sub="${x.id}">${esc(x.name)}</button>`).join('')
-      : '<span style="font-size:.74rem;color:var(--muted)">No subcategories yet.</span>';
-    subRow.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => {
-      currentNodeId = b.dataset.sub;
-      currentLevel = 'subcategory';
-      renderCatalog();
-    });
-    relatedProducts = children(node.id, 'product');
-  } else if (node.type === 'subcategory') {
-    subRow.innerHTML = children(currentCategoryId, 'subcategory')
-      .map(x => `<button class="subcat-pill ${x.id === node.id ? 'active' : ''}" data-sub="${x.id}">${esc(x.name)}</button>`)
-      .join('');
-    subRow.querySelectorAll('[data-sub]').forEach(b => b.onclick = () => {
-      currentNodeId = b.dataset.sub;
-      currentLevel = 'subcategory';
-      renderCatalog();
-    });
-    relatedProducts = children(node.id, 'product');
-  }
+  // Catalog has exactly two levels: Category -> Product.
+  const relatedProducts = children(node.id, 'product');
 
   const items = document.getElementById('productItems');
   items.innerHTML = relatedProducts.length
@@ -208,7 +178,6 @@ function renderBreadcrumbs() {
   el.querySelectorAll('button').forEach(b => b.onclick = () => {
     const n = byId(b.dataset.id);
     currentNodeId = n.id;
-    currentLevel = n.type;
     if (n.type === 'category') currentCategoryId = n.id;
     renderCatalog();
   });
@@ -217,15 +186,12 @@ function renderBreadcrumbs() {
 function openProduct(id) {
   const product = byId(id);
   if (!product) return;
-  const variants = children(id, 'variant');
   document.getElementById('detailTitle').textContent = product.name;
-  document.getElementById('detailKicker').textContent = (byId(product.parentId)?.name || 'Product') + ' · ' + typeLabel(product.type);
+  document.getElementById('detailKicker').textContent = (byId(product.parentId)?.name || 'Product') + ' · Product';
   document.getElementById('detailName').textContent = product.name;
   document.getElementById('detailDescription').textContent = product.description;
   document.getElementById('detailImage').style.backgroundImage = `url('${String(product.image || DEFAULT_IMAGE).replace(/'/g, "%27")}')`;
-  document.getElementById('detailVariants').innerHTML = variants.length
-    ? variants.map(v => `<div class="variant-card"><strong>${esc(v.name)}</strong><span>${esc(v.description || v.tag || 'Export-ready variant')}</span></div>`).join('')
-    : '<div class="variant-card"><strong>Buyer-specific requirements</strong><span>Ask us about grade, packing, quantity and destination requirements.</span></div>';
+  document.getElementById('detailVariants').innerHTML = '<div class="variant-card"><strong>Buyer-specific requirements</strong><span>Ask us about grade, packing, quantity and destination requirements.</span></div>';
   const quoteBtn = document.getElementById('detailQuoteBtn');
   const messageBtn = document.getElementById('detailMessageBtn');
   if (quoteBtn) quoteBtn.onclick = () => window.prepareProductInquiry?.(product.name);

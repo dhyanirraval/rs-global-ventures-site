@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RS Global Ventures | Admin</title>
+<style>
+:root{--green:#063d32;--green2:#0b5c4b;--gold:#d99a18;--ink:#102f29;--muted:#6b7773;--line:#dce8e3;--bg:#f6faf8;--danger:#a9362a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px Arial,sans-serif}.wrap{width:min(1180px,calc(100% - 28px));margin:26px auto}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 12px 40px rgba(5,54,44,.07)}.login{min-height:94vh;display:grid;place-items:center}.login .card{width:min(430px,100%)}h1,h2,h3{margin:0}.muted{color:var(--muted)}label{display:block;font-weight:700;font-size:12px;margin:14px 0 7px}input,textarea,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:inherit}textarea{min-height:120px;resize:vertical}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:#fff}.gold{background:var(--gold);color:#16261f}.ghost{background:#edf3f0;color:var(--ink)}.danger{background:#fff0ed;color:var(--danger)}.btn:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}.msg{padding:11px 13px;border-radius:10px;margin:14px 0}.error{background:#fff0ed;color:#96362b}.ok{background:#edf9f1;color:#19603a}.top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px}.actions{display:flex;gap:8px;flex-wrap:wrap}.layout{display:grid;grid-template-columns:280px 1fr;gap:18px}.tree{display:grid;gap:7px;max-height:72vh;overflow:auto}.tree button{width:100%;text-align:left;padding:10px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer}.tree button.active{background:var(--green);color:#fff}.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.preview{width:180px;height:130px;border:1px solid var(--line);border-radius:12px;background:#eef3ef center/cover no-repeat;margin-top:8px}.item-list{display:grid;gap:8px;margin-top:14px}.item{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);padding:11px;border-radius:10px}.tag{font-size:11px;color:var(--muted)}.help{font-size:12px;line-height:1.55;color:var(--muted)}.status{font-weight:700}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#edf3f0;font-size:11px}.section-title{margin-top:22px;margin-bottom:8px;font-size:15px}@media(max-width:800px){.layout{grid-template-columns:1fr}.tree{max-height:260px}.row{grid-template-columns:1fr}.full{grid-column:auto}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login"><div class="card">
+  <h1 style="font-size:26px">RS Global Ventures</h1><p class="muted">Catalog Admin</p>
+  <div id="loginMsg" class="msg error hidden"></div>
+  <form id="loginForm">
+    <label>Username</label><input id="username" autocomplete="username" required>
+    <label>Password</label><input id="password" type="password" autocomplete="current-password" required>
+    <div class="actions" style="margin-top:16px"><button class="btn primary">Login</button><a class="btn ghost" href="/">Back to website</a></div>
+  </form>
+  <p class="help" style="margin-top:18px">This dashboard is designed for GitHub Pages. Changes are published to the repository through the GitHub Contents API; no database or application server is required.</p>
+</div></div>
+
+<div id="app" class="hidden"><div class="wrap">
+  <div class="top">
+    <div><h1 style="font-size:27px">Catalog Manager</h1><div class="muted">Manage categories and products without editing code.</div></div>
+    <div class="actions"><a class="btn ghost" href="/">View website</a><button class="btn ghost" id="logout">Logout</button></div>
+  </div>
+  <div id="msg" class="msg hidden"></div>
+
+  <section class="card" style="margin-bottom:18px">
+    <h2 style="font-size:17px">GitHub publishing</h2>
+    <p class="help">Existing products load automatically from <code>data/products.js</code>. A GitHub fine-grained token is only required when you add, edit, delete, or upload and publish changes.</p>
+    <div class="row">
+      <div><label>GitHub owner</label><input id="owner" value="dhyanirraval"></div>
+      <div><label>Repository</label><input id="repo" value="rs-global-ventures-site"></div>
+      <div><div><label>Branch</label><input id="branch" value="main"></div></div>
+      <div><div><label>GitHub token</label><input id="token" type="password" placeholder="github_pat_..."></div></div>
+    </div>
+    <div class="actions" style="margin-top:12px"><button class="btn gold" id="connect">Connect GitHub for Publishing</button><span id="connection" class="status pill">Catalog loaded locally</span></div>
+  </section>
+
+  <div id="dashboard" class="layout hidden">
+    <aside class="card">
+      <div class="top" style="margin-bottom:10px"><strong>Catalog</strong><button class="btn gold" id="addCategory">+ Category</button></div>
+      <div id="tree" class="tree"></div>
+    </aside>
+    <main class="card">
+      <div class="top">
+        <div><h2 id="formTitle" style="font-size:20px">Add Category</h2><div id="formHint" class="muted">Two-level catalog only: Category → Product.</div></div>
+      </div>
+      <form id="itemForm">
+        <input type="hidden" id="itemId">
+        <input type="hidden" id="itemType">
+        <div class="row">
+          <div class="full"><label>Name / Title</label><input id="name" required></div>
+          <div class="full"><label>Description</label><textarea id="description" required></textarea></div>
+          <div><label>Image</label><input id="imageFile" type="file" accept="image/*"><div id="preview" class="preview"></div></div>
+          <div><label>Current image path</label><input id="imagePath" readonly><p class="help">New category images go to <code>assets/categories/&lt;category&gt;/</code>. Product images go to <code>assets/products/&lt;category&gt;/</code>.</p></div>
+        </div>
+        <div class="actions" style="margin-top:16px">
+          <button class="btn primary" id="saveBtn">Save & Publish</button>
+          <button class="btn ghost" type="button" id="newProduct">+ Product in selected category</button>
+          <button class="btn ghost" type="button" id="newCategory">+ New Category</button>
+          <button class="btn danger" type="button" id="deleteBtn">Delete</button>
+        </div>
+      </form>
+      <div class="section-title">Products in selected category</div>
+      <div id="products" class="item-list"></div>
+    </main>
+  </div>
+</div></div>
+
+<script>
+const USERNAME="test_admin", PASSWORD="123456";
+const PRODUCTS_PATH="data/products.js";
+let catalog=[], selectedId=null, connected=false, newParentId=null;
+
+const $=id=>document.getElementById(id);
+function showMsg(text,ok=false){const e=$("msg");e.textContent=text;e.className="msg "+(ok?"ok":"error");e.classList.remove("hidden");clearTimeout(showMsg.t);showMsg.t=setTimeout(()=>e.classList.add("hidden"),5000)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function slug(s){return String(s||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")||"item"}
+function byId(id){return catalog.find(x=>x.id===id)}
+function cats(){return catalog.filter(x=>x.type==="category")}
+function products(catId){return catalog.filter(x=>x.type==="product"&&x.parentId===catId)}
+function settings(){return {owner:$("owner").value.trim(),repo:$("repo").value.trim(),branch:$("branch").value.trim()||"main",token:$("token").value.trim()}}
+function ghHeaders(){return {"Accept":"application/vnd.github+json","Authorization":"Bearer "+settings().token,"X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}}
+async function gh(path,opts={}){const r=await fetch("https://api.github.com/repos/"+settings().owner+"/"+settings().repo+"/contents/"+path+(opts.query||""),{...opts,headers:{...ghHeaders(),...(opts.headers||{})}});const d=await r.json();if(!r.ok)throw new Error(d.message||"GitHub request failed");return d}
+async function getFile(path){return gh(path+"?ref="+encodeURIComponent(settings().branch),{method:"GET",query:""})}
+function parseProducts(text){const m=text.match(/window\\.RSGV_PRODUCTS\\s*=\\s*([\\s\\S]*?);\\s*$/);if(!m)throw new Error("data/products.js format is not recognized");return JSON.parse(m[1])}
+function jsProducts(){return "window.RSGV_PRODUCTS = "+JSON.stringify(catalog,null,2)+";\\n"}
+function b64FromArrayBuffer(buf){let binary="";const bytes=new Uint8Array(buf);const chunk=0x8000;for(let i=0;i<bytes.length;i+=chunk)binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));return btoa(binary)}
+function pathFor(item,file){const ext=(file.name.match(/\\.[^.]+$/)||[".jpg"])[0].toLowerCase();const base=slug(item.name)+ext;if(item.type==="category")return "assets/categories/"+slug(item.name)+"/"+base;const c=byId(item.parentId);return "assets/products/"+slug(c?.name||"products")+"/"+base}
+async function putFile(path,content,message,sha){return gh(path,{method:"PUT",body:JSON.stringify({message,content,branch:settings().branch,...(sha?{sha}:{})})})}
+async function deleteFile(path,sha,message){return gh(path,{method:"DELETE",body:JSON.stringify({message,sha,branch:settings().branch})})}
+
+function renderTree(){let h="";const selected=byId(selectedId);cats().forEach(c=>{const active=selectedId===c.id||(selected?.type==="product"&&selected.parentId===c.id);h+=`<button class="${active?"active":""}" data-id="${c.id}"><b>${esc(c.name)}</b><div class="tag">${products(c.id).length} product(s)</div></button>`});$("tree").innerHTML=h||'<div class="muted">No categories yet.</div>';document.querySelectorAll("#tree [data-id]").forEach(b=>b.onclick=()=>select(b.dataset.id))}
+function renderProducts(){let cat=byId(selectedId);if(cat?.type==="product")cat=byId(cat.parentId);if(!cat){$("products").innerHTML='<div class="muted">Select a category.</div>';return}const ps=products(cat.id);$("products").innerHTML=ps.length?ps.map(p=>`<div class="item"><div><b>${esc(p.name)}</b><div class="tag">${esc(p.description)}</div></div><button class="btn ghost" data-product="${p.id}">Edit</button></div>`).join(""):'<div class="muted">No products in this category.</div>';document.querySelectorAll("[data-product]").forEach(b=>b.onclick=()=>select(b.dataset.product))}
+function fill(item){selectedId=item.id;$("itemId").value=item.id;$("itemType").value=item.type;$("name").value=item.name;$("description").value=item.description||"";$("imagePath").value=item.image||"";$("preview").style.backgroundImage=`url("${item.image||"/default-product.svg"}")`;$("formTitle").textContent=(item.type==="category"?"Edit Category":"Edit Product");$("formHint").textContent=item.type==="category"?"Update the category image or description.":"Update this product inside its category.";$("deleteBtn").classList.remove("hidden");$("newProduct").classList.toggle("hidden",item.type!=="category");renderTree();renderProducts()}
+function reset(type,parentId=null){selectedId=null;newParentId=parentId;$("itemId").value="";$("itemType").value=type;$("name").value="";$("description").value="";$("imagePath").value="";$("imageFile").value="";$("preview").style.backgroundImage="url('/default-product.svg')";$("formTitle").textContent=type==="category"?"Add Category":"Add Product";$("formHint").textContent=type==="category"?"Create a category with an image and description.":"Add a product inside the selected category.";$("deleteBtn").classList.add("hidden");$("newProduct").classList.toggle("hidden",type!=="category")}
+function select(id){const item=byId(id);if(item){newParentId=null;fill(item)}}
+async function loadLocalCatalog(){
+  const r=await fetch('/data/products.js?admin='+Date.now(),{cache:'no-store'});
+  if(!r.ok) throw new Error('Unable to load data/products.js from the website.');
+  const text=await r.text();
+  catalog=parseProducts(text).filter(x=>x.type==='category'||x.type==='product');
+  // Normalize legacy entries so the admin remains strictly Category -> Product.
+  catalog=catalog.map(x=>x.type==='category'?{...x,parentId:null}:{...x,parentId:byId(x.parentId)?.type==='category'?x.parentId:null});
+  catalog=catalog.filter(x=>x.type==='category'||(x.type==='product'&&x.parentId));
+  connected=false;
+  $("connection").textContent='Catalog loaded locally';
+  $("connection").style.background='#edf9f1';
+  $("dashboard").classList.remove('hidden');
+  renderTree();
+  if(cats()[0]) select(cats()[0].id); else reset('category');
+}
+async function connectGithub(){
+  if(!settings().token) throw new Error('Enter your GitHub fine-grained token to publish changes.');
+  // Verify the repository and load its current catalog so publishing cannot overwrite newer data.
+  const f=await getFile(PRODUCTS_PATH);
+  const text=atob(f.content.replace(/\n/g,''));
+  catalog=parseProducts(new TextDecoder().decode(Uint8Array.from(text,c=>c.charCodeAt(0)))).filter(x=>x.type==='category'||x.type==='product');
+  catalog=catalog.map(x=>x.type==='category'?{...x,parentId:null}:{...x,parentId:byId(x.parentId)?.type==='category'?x.parentId:null});
+  catalog=catalog.filter(x=>x.type==='category'||(x.type==='product'&&x.parentId));
+  connected=true;
+  sessionStorage.setItem('rsgv_github_token',settings().token);
+  $("connection").textContent='GitHub publishing connected';
+  $("connection").style.background='#edf9f1';
+  renderTree();
+  if(cats()[0]) select(cats()[0].id);
+}
+$("connect").onclick=async()=>{try{await connectGithub();showMsg('GitHub connected. Changes can now be published.',true)}catch(e){showMsg(e.message)}};
+$("logout").onclick=()=>{sessionStorage.removeItem("rsgv_admin");location.reload()};
+$("addCategory").onclick=()=>reset("category");
+$("newCategory").onclick=()=>reset("category");
+$("newProduct").onclick=()=>{if(selectedId&&byId(selectedId)?.type==="category")reset("product",selectedId);else showMsg("Select a category first.")};
+$("imageFile").onchange=()=>{const f=$("imageFile").files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$("preview").style.backgroundImage=`url("${r.result}")`};r.readAsDataURL(f)};
+$("itemForm").onsubmit=async e=>{e.preventDefault();if(!connected){showMsg("Connect to GitHub first.");return}const type=$("itemType").value||"category";const old=byId($("itemId").value);if(type==="product"&&!old&&!selectedId){showMsg("Select a category before adding a product.");return}let parentId=type==="product"?(old?.parentId||newParentId||selectedId):null;const name=$("name").value.trim(),description=$("description").value.trim();if(!name||!description){showMsg("Name and description are required.");return}const file=$("imageFile").files[0];let image=old?.image||"";try{
+  let item=old?{...old,name,description}: {id:type+"-"+Date.now(),type,parentId,name,tag:type==="category"?"Export category":byId(parentId)?.name||"Product",description,image:""};
+  if(file){const path=pathFor(item,file);const data=await file.arrayBuffer();let sha;try{const existing=await getFile(path);sha=existing.sha}catch{}await putFile(path,b64FromArrayBuffer(data),"Add/update "+type+" image for "+name,sha);item.image="/"+path;
+    if(old?.image&&old.image!==item.image&&old.image.startsWith("/assets/")){try{const oldPath=old.image.replace(/^\//,"");const oldFile=await getFile(oldPath);await deleteFile(oldPath,oldFile.sha,"Remove old image for "+name)}catch{}}
+  }else if(!image){showMsg("Please upload an image.");return}
+  if(old){const i=catalog.findIndex(x=>x.id===old.id);catalog[i]=item}else catalog.push(item);
+  const pf=await getFile(PRODUCTS_PATH);await putFile(PRODUCTS_PATH,btoa(unescape(encodeURIComponent(jsProducts()))),"Update product catalog",pf.sha);
+  renderTree();renderProducts();select(item.id);showMsg(type==="category"?"Category saved and published.":"Product saved and published.",true);
+}catch(err){showMsg(err.message)}
+};
+$("deleteBtn").onclick=async()=>{if(!connected||!selectedId)return;const item=byId(selectedId);if(!item)return;if(!confirm("Delete "+item.name+"? This will also remove its image when possible."))return;try{
+  const remove=[item.id];if(item.type==="category")products(item.id).forEach(p=>remove.push(p.id));
+  const doomed=catalog.filter(x=>remove.includes(x.id));for(const x of doomed){if(x.image?.startsWith("/assets/")){try{const path=x.image.slice(1),f=await getFile(path);await deleteFile(path,f.sha,"Delete catalog image")}catch{}}}
+  catalog=catalog.filter(x=>!remove.includes(x.id));const pf=await getFile(PRODUCTS_PATH);await putFile(PRODUCTS_PATH,btoa(unescape(encodeURIComponent(jsProducts()))),"Delete catalog item(s)",pf.sha);selectedId=null;renderTree();renderProducts();if(cats()[0])select(cats()[0].id);else reset("category");showMsg("Deleted and published.",true);
+}catch(err){showMsg(err.message)}};
+if(sessionStorage.getItem("rsgv_admin")==="1"){$("loginView").classList.add("hidden");$("app").classList.remove("hidden")}
+const savedToken=sessionStorage.getItem("rsgv_github_token"); if(savedToken) $("token").value=savedToken;
+loadLocalCatalog().catch(e=>showMsg(e.message));
+</script>
+</body>
+</html>
